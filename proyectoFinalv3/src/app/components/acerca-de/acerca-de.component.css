@@ -7,13 +7,6 @@ div {
     text-align: center;
 }
 
-/* el nombre */
-#nombre {
-    font-weight: bold;
-    margin-top: 40px;
-    font-family: sans-serif;
-
-}
 
 /* foto de perfil estilo */
 
@@ -23,7 +16,27 @@ div {
         width: 15%;
         border-radius: 100%;
         box-shadow: 3px 3px 3px grey;
-        left: 20%;
+        left: 3%;
+        top: 500px;
     }
 }
 
+@media (max-width: 575px){
+    #fotoPerfil {
+        position: absolute;
+        width: 20%;
+        border-radius: 100%;
+        box-shadow: 3px 3px 3px grey;
+        right: 40%;
+        top: 294px;
+    }
+}
+
+
+/* el nombre */
+#nombre {
+    font-weight: bold;
+    margin-top: 40px;
+    font-family: sans-serif;
+
+}
