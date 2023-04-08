@@ -11,6 +11,7 @@ import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 import { ExperienciaComponent } from './components/experiencia/experiencia.component';
 import { EduComponent } from './components/edu/edu.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { SkillsComponent } from './components/skills/skills.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     BannerComponent,
     AcercaDeComponent,
     ExperienciaComponent,
-    EduComponent
+    EduComponent,
+    SkillsComponent
   ],
   imports: [
     BrowserModule,
