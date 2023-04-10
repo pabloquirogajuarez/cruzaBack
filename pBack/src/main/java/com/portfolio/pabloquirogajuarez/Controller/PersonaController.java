@@ -32,13 +32,13 @@ public class PersonaController {
     @PostMapping("/personas/crear")
     public String createPersona(@RequestBody Persona persona){
         ipersonaService.savePersona(persona);
-        return "Persona creada correctamente";
+        return "Persona creada correctamente.";
     }
     
     @DeleteMapping("/personas/borrar/{id}")
     public String deletePersona(@PathVariable Long id){
         ipersonaService.deletePersona(id);
-        return "Persona eliminada correctamente";
+        return "Persona eliminada correctamente.";
     }
     //URL:PUERTO/personas/editar/idUsuario/nombre&apellido&img
     @PutMapping("/personas/editar/{id}")
