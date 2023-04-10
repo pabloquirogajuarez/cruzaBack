@@ -11,8 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Administrator
  */
-public interface IPersonaRepository extends JpaRepository<Persona,Long> {
-
-    public Object FindById(Long id);
-    
+public interface IPersonaRepository extends JpaRepository<Persona,Long> {    
 }
