@@ -8,6 +8,7 @@ import com.portfolio.pabloquirogajuarez.Entity.Persona;
 import com.portfolio.pabloquirogajuarez.Interface.IPersonaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,17 +32,20 @@ public class PersonaController {
     }
     
     //el front guarda esto en la base de datos.
+    @PreAuthorize("hasRole('ADMIN')") //solo el admin puede crear usuarios
     @PostMapping("/personas/crear")
     public String createPersona(@RequestBody Persona persona){
         ipersonaService.savePersona(persona);
         return "Persona creada correctamente.";
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/personas/borrar/{id}")
     public String deletePersona(@PathVariable Long id){
         ipersonaService.deletePersona(id);
         return "Persona eliminada correctamente.";
     }
+    @PreAuthorize("hasRole('ADMIN')")
     //URL:PUERTO/personas/editar/idUsuario/nombre&apellido&img
     @PutMapping("/personas/editar/{id}")
     public Persona editPersona(@PathVariable Long id,
