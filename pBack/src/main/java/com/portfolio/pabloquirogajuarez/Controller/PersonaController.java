@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 //indicar a la base de datos que es un controllador
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin (origins = "http://localhost:4200")
 public class PersonaController {
     @Autowired IPersonaService ipersonaService;
     
     //el front diferencia depende la url, el tipo de metodo que va a utilizar
-    @GetMapping("personas/traer")
+    @GetMapping("/personas/traer")
     public List<Persona> getPersona(){
         return ipersonaService.getPersona();
     }
