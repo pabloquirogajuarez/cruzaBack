@@ -6,3 +6,26 @@
         radial-gradient(at 53% 40%, rgb(255, 255, 255) 0px, transparent 50%),
         radial-gradient(at 73% 43%, rgb(59, 194, 247) 0px, transparent 50%);
 }
+
+h2{
+    font-weight: 800;
+}
+
+p {
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 600;
+    text-align: left;
+    display: block;
+}
+
+button {
+    font-weight: 800;
+}
+
+input {
+    font-weight: 800;
+    font-family: Poppins, sans-serif;
+}

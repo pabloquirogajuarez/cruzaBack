@@ -40,3 +40,12 @@ div {
     font-family: sans-serif;
 
 }
+
+h1 {
+    font-weight: 800;
+}
+
+#nombre {
+    font-weight: 800;
+    font-family: Raleway, sans-serif;
+}
