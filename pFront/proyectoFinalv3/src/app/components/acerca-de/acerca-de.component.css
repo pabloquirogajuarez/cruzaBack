@@ -4,7 +4,7 @@
 
 div {
     background-color: #eff2f5;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -50,6 +50,10 @@ h1 {
     font-family: Raleway, sans-serif;
 }
 
-.row {
+.row{
     background-color: #FFFF;
 }
+.row div{
+    background-color: #FFFF;
+}
+
