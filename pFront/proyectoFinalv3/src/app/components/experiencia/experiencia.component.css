@@ -3,9 +3,13 @@
 }
 
 div {
-    background-color: #a1b5cb;
+    background-color: #99e4ff;
 }
 
 h1, h3{
     display: inline;
+}
+
+h1 {
+    font-weight: 800;
 }

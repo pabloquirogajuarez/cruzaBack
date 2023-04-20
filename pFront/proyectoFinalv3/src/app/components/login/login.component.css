@@ -1,10 +1,8 @@
 .gradient-custom {
-/* fallback for old browsers */
-background: rgb(168, 200, 255);
-
-/* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to right, rgba(247, 247, 247), rgb(168, 200, 255));
-
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: linear-gradient(to right, rgba(247, 247, 247), rgb(168, 200, 255));
+    background-color: #99e4ff;
+    background-image:
+        radial-gradient(at 70% 83%, rgb(255, 255, 255) 0px, transparent 50%),
+        radial-gradient(at 67% 3%, rgb(23, 201, 255) 0px, transparent 50%),
+        radial-gradient(at 53% 40%, rgb(255, 255, 255) 0px, transparent 50%),
+        radial-gradient(at 73% 43%, rgb(59, 194, 247) 0px, transparent 50%);
 }

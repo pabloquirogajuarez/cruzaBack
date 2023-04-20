@@ -1,6 +1,6 @@
 .row {
     padding: 20px;
-    background-color: #b7c3cf;
+    background-color: #dcf4fd
 }
 
 .contenedor {
@@ -14,4 +14,12 @@
 
 .img-proyecto {
     box-shadow: 5px 5px 10px #000000;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+div div h1{
+    font-weight: 600;
 }
