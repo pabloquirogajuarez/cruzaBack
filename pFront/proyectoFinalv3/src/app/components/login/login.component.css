@@ -39,12 +39,23 @@ img{
     
 }
 
-    /* Estilos para los inputs */
+/* Estilos para los inputs */
     input.form-control {
         transition: border-color 0.3s ease-in-out;
       }
   
-      /* Cambia el color del borde al hacer hover */
+    /* Cambia el color del borde al hacer hover */
       input.form-control:hover {
+        border-color: #3d3d3d;
+      }
+
+
+     /* Estilos para el botón de inicio de sesión */
+     button.btn-outline-light {
+        transition: border-color 0.3s ease-in-out;
+      }
+  
+      /* Cambia el color del borde al hacer hover */
+      button.btn-outline-light:hover {
         border-color: #3d3d3d;
       }

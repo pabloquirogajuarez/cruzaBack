@@ -40,3 +40,12 @@ img{
 }
 }
 
+     /* Estilos para el botón de inicio de sesión */
+     button.btn-outline-light {
+        transition: border-color 0.3s ease-in-out;
+      }
+  
+      /* Cambia el color del borde al hacer hover */
+      button.btn-outline-light:hover {
+        border-color: #31c1fa;
+      }
