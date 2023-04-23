@@ -11,6 +11,7 @@
         [percent]="(skill.porcentaje)" 
         [radius]="90" [imageSrc]="''" 
         [title]="(skill.nombre)"
+        [titleFontWeight]="'bold'"
         [titleColor]="'#212F3C'"
         [showTitle]="true" 
         [showImage]="false" 
@@ -33,7 +34,7 @@
             </td>
             <td *ngIf="isLogged">
                 <button class="btn btn-danger" (click)="delete(skill.id)">
-                    <i class="bi bi-trash-fill"></i></button>
+                    <i class="bi bi-trash3-fill"></i></button>
             </td>
         </div>
         
