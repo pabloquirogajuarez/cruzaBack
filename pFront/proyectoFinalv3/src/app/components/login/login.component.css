@@ -38,3 +38,13 @@ img{
     left: 60px;
     
 }
+
+    /* Estilos para los inputs */
+    input.form-control {
+        transition: border-color 0.3s ease-in-out;
+      }
+  
+      /* Cambia el color del borde al hacer hover */
+      input.form-control:hover {
+        border-color: #3d3d3d;
+      }
