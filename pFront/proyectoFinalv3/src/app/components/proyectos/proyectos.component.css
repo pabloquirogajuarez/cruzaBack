@@ -10,6 +10,7 @@
 .parte1, .parte2{
     display: inline-block;
     text-align: justify;
+    padding: 20px;
 }
 
 .img-proyecto {
@@ -22,4 +23,8 @@ h1 {
 
 div div h1{
     font-weight: 600;
+}
+
+img {
+    width: 100%;
 }
