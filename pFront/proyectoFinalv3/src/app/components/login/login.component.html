@@ -6,12 +6,13 @@
           <div class="card-body p-5 text-center">
 
             <div class="mb-md-5 mt-md-4 pb-5">
-
-              <h2 class="mb-2 text-uppercase">Auth</h2>
-              <p class="text-white-50 mb-5">Ingrese usuario y contraseña.</p>
-
+              <div class="d-flex justify-content-center align-items-center">
+                <h2 class="mb-2">Bienvenido</h2> 
+                <img src="../../../assets/wavingHand.png" alt="" class="ml-2 mt-2 mb-4">
+              </div>
               <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
                 <div class="form-outline form-white mb-4">
+                  <p class="text-white-50">Ingrese un usuario y contraseña</p>
                   <!--<label class="form-label" for="nombreUsuario">Usuario</label>-->
                   <input type="email" id="nombreUsuario" name="nombreUsuario" class="form-control form-control-lg"
                     [(ngModel)]="nombreUsuario" required />
