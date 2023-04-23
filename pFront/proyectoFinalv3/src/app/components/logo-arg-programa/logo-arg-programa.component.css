@@ -49,3 +49,10 @@ img{
       button.btn-outline-light:hover {
         border-color: #31c1fa;
       }
+
+.yoprogramo {
+    display: inline; 
+    margin-left: 5px;
+    color: white;
+    font-weight: 700;
+}
