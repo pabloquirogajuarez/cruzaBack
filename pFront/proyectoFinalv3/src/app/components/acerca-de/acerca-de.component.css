@@ -17,7 +17,7 @@ div {
         border-radius: 100%;
         box-shadow: 3px 3px 3px grey;
         left: 3%;
-        top: 705px;
+        top: 450px;
     }
 }
 
@@ -57,3 +57,6 @@ h1 {
     background-color: #FFFF;
 }
 
+p .subtitulo {
+    top: 20px;
+}

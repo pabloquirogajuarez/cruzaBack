@@ -7,25 +7,24 @@
 
             <div class="mb-md-5 mt-md-4 pb-5">
 
-              <h2 class="fw-bold mb-2 text-uppercase">Auth</h2>
+              <h2 class="mb-2 text-uppercase">Auth</h2>
               <p class="text-white-50 mb-5">Ingrese usuario y contraseña.</p>
 
               <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
-
                 <div class="form-outline form-white mb-4">
-                  <label class="form-label" for="nombreUsuario">Usuario</label>
+                  <!--<label class="form-label" for="nombreUsuario">Usuario</label>-->
                   <input type="email" id="nombreUsuario" name="nombreUsuario" class="form-control form-control-lg"
                     [(ngModel)]="nombreUsuario" required />
                 </div>
 
                 <div class="form-outline form-white mb-4">
-                  <label class="form-label" for="password">Contraseña</label>
+                  <!--<label class="form-label" for="password">Contraseña</label>-->
                   <input type="password" id="password" name="password" class="form-control form-control-lg" [(ngModel)]="password"
                     required />
                 </div>
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Ingresar</button>
-
+                <button class="btn btn-outline-light btn-lg px-5" type="submit">Iniciar sesión</button>
               </form>
+              
             </div>
           </div>
         </div>

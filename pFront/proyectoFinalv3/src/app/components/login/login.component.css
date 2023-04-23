@@ -1,3 +1,6 @@
+*{
+    font-family: Raleway, sans-serif;
+}
 .gradient-custom {
     background-color: #99e4ff;
     background-image:
@@ -27,5 +30,4 @@ button {
 
 input {
     font-weight: 800;
-    font-family: Poppins, sans-serif;
 }

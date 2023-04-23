@@ -21,6 +21,7 @@
     "@popperjs/core": "^2.11.7",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.2.3",
+    "firebase": "^9.20.0",
     "jquery": "^3.6.4",
     "ng-circle-progress": "^1.7.1",
     "rxjs": "~7.8.0",
