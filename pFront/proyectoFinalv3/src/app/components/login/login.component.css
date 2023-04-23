@@ -26,10 +26,12 @@ p {
 
 button {
     font-weight: 800;
+    border-radius: 10px;
 }
 
 input {
     font-weight: 800;
+    border-radius: 15px;
 }
 
 img{
