@@ -5,6 +5,32 @@
             + Añadir experiencia
         </button>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title"></h6>
+                        <div id="content">
+                            <ul class="timeline" *ngFor="let Experiencia of expe">
+                                <li class="event">
+                                    <h3>{{Experiencia.nombreE}}</h3>
+                                    <p>{{Experiencia.descripcionE}}</p>
+                                    <tbody>
+                                            <td *ngIf="isLogged"><button class="btn btn-light" routerLink="/editexp/{{Experiencia.id}}"><i
+                                                        class="bi bi-pencil-square"></i> Editar</button></td>
+                                            <td *ngIf="isLogged"><button class="btn btn-danger" (click)="delete(Experiencia.id)"><i
+                                                        class="bi bi-trash3-fill"></i> Borrar</button></td>
+                                    </tbody>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
     <div class="col-lg-1"></div>
     <div class="col-lg-11">
         <table class="table">
@@ -22,5 +48,5 @@
             </tbody>
         </table>
     </div>
-
+-->
 </div>
