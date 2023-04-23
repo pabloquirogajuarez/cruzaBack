@@ -14,7 +14,7 @@
                         <div id="content">
                             <ul class="timeline" *ngFor="let Experiencia of expe">
                                 <li class="event">
-                                    <h3>{{Experiencia.nombreE}}</h3>
+                                    <h3 class="tituloE">{{Experiencia.nombreE}}</h3>
                                     <p>{{Experiencia.descripcionE}}</p>
                                     <tbody>
                                             <td *ngIf="isLogged"><button class="btn btn-light" routerLink="/editexp/{{Experiencia.id}}"><i
