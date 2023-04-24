@@ -7,25 +7,16 @@
 
 
     <div class="text-center col-sm-4 col-md-4 col-lg-4 circulo" *ngFor="let skill of skill">
-        <circle-progress 
-        [percent]="(skill.porcentaje)" 
-        [radius]="90" [imageSrc]="''" 
-        [title]="(skill.nombre)"
-        [titleFontWeight]="'bold'"
-        [titleColor]="'#212F3C'"
-        [showTitle]="true" 
-        [showImage]="false" 
-        [imageHeight]="70" 
-        [imageWidth]="70" 
-        [showUnits]="false"
-        [showSubtitle]="false" 
-        [outerStrokeWidth]="10" 
-        [innerStrokeWidth]="5" 
+        <circle-progress
+        [percent]="(skill.porcentaje)"
         [outerStrokeColor]="'#40CFFF'"
-        [innerStrokeColor]="'#FFFF'" 
-        [animation]="true" 
-        [animationDuration]="600">
-        </circle-progress>
+        [innerStrokeColor]="'#FFFF'"
+        [imageSrc]=""
+        [title]="(skill.nombre)"
+      ></circle-progress>
+      <div class="row text-center">
+        <p class="fw-bold">{{skill.nombre}} - {{skill.porcentaje}}%</p>
+      </div>
 
         <div>
             <td *ngIf="isLogged">
