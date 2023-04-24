@@ -57,6 +57,8 @@ h1 {
     background-color: #FFFF;
 }
 
-p .subtitulo {
-    top: 20px;
+.subtitulo-container {
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    padding: 5px;
 }
