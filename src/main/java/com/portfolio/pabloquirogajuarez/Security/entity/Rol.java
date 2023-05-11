@@ -5,7 +5,7 @@
  */
 package com.portfolio.pabloquirogajuarez.Security.Entity;
 
-import com.portfolio.pabloquirogajuarez.Security.Enums.RolNombre;
+import com.portfolio.pabloquirogajuarez.Security.enums.RolNombre;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
