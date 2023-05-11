@@ -5,10 +5,7 @@
  */
 package com.portfolio.pabloquirogajuarez.Security.enums;
 
-/**
- *
- * @author Usuario
- */
 public enum RolNombre {
-    ROLE_ADMIN, ROLE_USER
+    ROLE_ADMIN,
+    ROLE_USER
 }
