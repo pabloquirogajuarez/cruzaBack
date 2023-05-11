@@ -6,7 +6,7 @@
 package com.portfolio.pabloquirogajuarez.Security.Repository;
 
 import com.portfolio.pabloquirogajuarez.Security.Entity.Rol;
-import com.portfolio.pabloquirogajuarez.Security.enums.RolNombre;
+import com.portfolio.pabloquirogajuarez.Security.Enums.RolNombre;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

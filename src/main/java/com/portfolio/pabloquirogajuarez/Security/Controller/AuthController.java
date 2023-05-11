@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.portfolio.pabloquirogajuarez.Security.Controller;
 
 import com.portfolio.pabloquirogajuarez.Security.Dto.JwtDto;
@@ -10,7 +5,7 @@ import com.portfolio.pabloquirogajuarez.Security.Dto.LoginUsuario;
 import com.portfolio.pabloquirogajuarez.Security.Dto.NuevoUsuario;
 import com.portfolio.pabloquirogajuarez.Security.Entity.Rol;
 import com.portfolio.pabloquirogajuarez.Security.Entity.Usuario;
-import com.portfolio.pabloquirogajuarez.Security.enums.RolNombre;
+import com.portfolio.pabloquirogajuarez.Security.Enums.RolNombre;
 import com.portfolio.pabloquirogajuarez.Security.Service.RolService;
 import com.portfolio.pabloquirogajuarez.Security.Service.UsuarioService;
 import com.portfolio.pabloquirogajuarez.Security.jwt.JwtProvider;
