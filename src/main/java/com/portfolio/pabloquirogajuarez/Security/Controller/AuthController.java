@@ -10,7 +10,7 @@ import com.portfolio.pabloquirogajuarez.Security.Dto.LoginUsuario;
 import com.portfolio.pabloquirogajuarez.Security.Dto.NuevoUsuario;
 import com.portfolio.pabloquirogajuarez.Security.Entity.Rol;
 import com.portfolio.pabloquirogajuarez.Security.Entity.Usuario;
-import com.portfolio.pabloquirogajuarez.Security.enums.RolNombre;
+import com.portfolio.pabloquirogajuarez.Security.Enums.RolNombre;
 import com.portfolio.pabloquirogajuarez.Security.Service.RolService;
 import com.portfolio.pabloquirogajuarez.Security.Service.UsuarioService;
 import com.portfolio.pabloquirogajuarez.Security.jwt.JwtProvider;
