@@ -12,14 +12,21 @@ public class dtoEducacion {
     private String nombreE;
     @NotBlank
     private String descripcionE;
+    @NotBlank
+    private String FechaInicioE;
+    @NotBlank
+    private String FechaFinE;
 
     public dtoEducacion() {
     }
 
-    public dtoEducacion(String nombreE, String descripcionE) {
-        this.nombreE = nombreE;
+    public dtoEducacion(String descripcionE, String FechaInicioE, String FechaFinE) {
         this.descripcionE = descripcionE;
+        this.FechaInicioE = FechaInicioE;
+        this.FechaFinE = FechaFinE;
     }
+
+    //getters setters
 
     public String getNombreE() {
         return nombreE;
@@ -36,6 +43,24 @@ public class dtoEducacion {
     public void setDescripcionE(String descripcionE) {
         this.descripcionE = descripcionE;
     }
+
+    public String getFechaInicioE() {
+        return FechaInicioE;
+    }
+
+    public void setFechaInicioE(String FechaInicioE) {
+        this.FechaInicioE = FechaInicioE;
+    }
+
+    public String getFechaFinE() {
+        return FechaFinE;
+    }
+
+    public void setFechaFinE(String FechaFinE) {
+        this.FechaFinE = FechaFinE;
+    }
+
+    
     
     
 }
