@@ -3,6 +3,7 @@ import com.portfolio.pabloquirogajuarez.Dto.dtoPersona;
 import com.portfolio.pabloquirogajuarez.Entity.Persona;
 import com.portfolio.pabloquirogajuarez.Security.Controller.Mensaje;
 import com.portfolio.pabloquirogajuarez.Service.ImpPersonaService;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,14 @@ public class PersonaController {
     @Autowired
     ImpPersonaService personaService;
     
+    @Operation(summary = "Trae una lista de las personas creadas")
     @GetMapping("/lista")
     public ResponseEntity<List<Persona>> list(){
         List<Persona> list = personaService.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
+    @Operation(summary = "Según los id's obtenidos en personas/lista, puedes ver la informacion de la misma")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Persona> getById(@PathVariable("id")int id){
         if(!personaService.existsById(id)){
@@ -64,7 +67,7 @@ public class PersonaController {
         return new ResponseEntity(new Mensaje("Educacion creada"), HttpStatus.OK);
                 
     }*/
-    
+    @Operation(summary = "Según los id's obtenidos en skill/lista, edita la informacion del id al que se apunta")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoPersona dtopersona){
         if(!personaService.existsById(id)){

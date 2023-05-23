@@ -8,6 +8,7 @@ import com.portfolio.pabloquirogajuarez.Dto.dtoHys;
 import com.portfolio.pabloquirogajuarez.Entity.hys;
 import com.portfolio.pabloquirogajuarez.Security.Controller.Mensaje;
 import com.portfolio.pabloquirogajuarez.Service.Shys;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class CHys {
 
     @Autowired
     Shys shys;
-
+    @Operation(summary = "Trae una lista de las skills creadas")
     @GetMapping("/lista")
     public ResponseEntity<List<hys>> list() {
         List<hys> list = shys.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
-
+    @Operation(summary = "Según los id's obtenidos en skills/lista, puedes ver la informacion de la misma")
     @GetMapping("/detail/{id}")
     public ResponseEntity<hys> getById(@PathVariable("id") int id) {
         if (!shys.existsById(id)) {
@@ -52,7 +53,8 @@ public class CHys {
         hys hYs = shys.getOne(id).get();
         return new ResponseEntity(hYs, HttpStatus.OK);
     }
-
+    
+    @Operation(summary = "Borrar una skill por id")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         if (!shys.existsById(id)) {
@@ -61,7 +63,7 @@ public class CHys {
         shys.delete(id);
         return new ResponseEntity(new Mensaje("Skill eliminado"), HttpStatus.OK);
     }
-
+    @Operation(summary = "Crear una skill")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoHys dtohys) {
         if (StringUtils.isBlank(dtohys.getNombre())) {
@@ -76,7 +78,7 @@ public class CHys {
 
         return new ResponseEntity(new Mensaje("Skill agregada"), HttpStatus.OK);
     }
-
+    @Operation(summary = "Según los id's obtenidos en skill/lista, edita la informacion del id al que se apunta")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoHys dtohys) {
         //Validamos si existe el ID

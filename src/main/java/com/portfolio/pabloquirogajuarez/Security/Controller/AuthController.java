@@ -9,6 +9,7 @@ import com.portfolio.pabloquirogajuarez.Security.Enums.RolNombre;
 import com.portfolio.pabloquirogajuarez.Security.Service.RolService;
 import com.portfolio.pabloquirogajuarez.Security.Service.UsuarioService;
 import com.portfolio.pabloquirogajuarez.Security.jwt.JwtProvider;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.Valid;
@@ -43,6 +44,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
     
+    @Operation(summary = "Crea un nuevo usuario, siguiendo el formato json para asi asignar un nombre, nombre de usuario, email, password, y un rol ROLE_ADMIN o ROLE_USER")
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -67,11 +69,11 @@ public class AuthController {
         
         return new ResponseEntity(new Mensaje("Usuario guardado"),HttpStatus.CREATED);
     }
-    
+    @Operation(summary = "Valida el nombre de usuario y su contraseña")
     @PostMapping("/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("Campos incorrectos"), HttpStatus.BAD_REQUEST);
         
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
         loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));

@@ -9,6 +9,7 @@ import com.portfolio.pabloquirogajuarez.Dto.dtoExperiencia;
 import com.portfolio.pabloquirogajuarez.Entity.Experiencia;
 import com.portfolio.pabloquirogajuarez.Security.Controller.Mensaje;
 import com.portfolio.pabloquirogajuarez.Service.SExperiencia;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,14 @@ public class CExperiencia {
     @Autowired
     SExperiencia sExperiencia;
     
+    @Operation(summary = "Trae una lista de las experiencias creadas")
     @GetMapping("/lista")
     public ResponseEntity<List<Experiencia>> list(){
         List<Experiencia> list = sExperiencia.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
+    @Operation(summary = "Según los id's obtenidos en experiencia/lista, puedes ver la informacion puedes ver la informacion de la misma")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Experiencia> getById(@PathVariable("id") int id){
         if(!sExperiencia.existsById(id))
@@ -45,6 +48,7 @@ public class CExperiencia {
         return new ResponseEntity(experiencia, HttpStatus.OK);
     }
     
+    @Operation(summary = "Borrar una experiencia por id")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         if (!sExperiencia.existsById(id)) {
@@ -54,7 +58,7 @@ public class CExperiencia {
         return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
     }
 
-    
+    @Operation(summary = "Crear una experiencia")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoExperiencia dtoexp){      
         if(StringUtils.isBlank(dtoexp.getNombreE()))
@@ -68,6 +72,8 @@ public class CExperiencia {
         return new ResponseEntity(new Mensaje("Experiencia agregada"), HttpStatus.OK);
     }
     
+    
+    @Operation(summary = "Según los id's obtenidos en experiencia/lista, edita la informacion del id al que se apunta")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoExperiencia dtoexp){
         //Validamos si existe el ID
