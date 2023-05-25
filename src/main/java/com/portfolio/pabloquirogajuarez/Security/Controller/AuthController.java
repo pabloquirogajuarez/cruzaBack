@@ -44,7 +44,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
     
-    @Operation(summary = "Crea un nuevo usuario, siguiendo el formato json para asi asignar un nombre, nombre de usuario, email, password, y un rol ROLE_ADMIN o ROLE_USER")
+    @Operation(summary = "Crea un nuevo usuario, siguiendo el formato json para asi asignar un nombre, nombre de usuario, email, password, y un rol que puede ser admin o user ")
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
