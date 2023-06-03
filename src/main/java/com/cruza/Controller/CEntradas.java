@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/entradas")
-@CrossOrigin(origins = {"https://frontendpqj.web.app", "http://localhost:4200"})
+@CrossOrigin(origins = {"https://cruzafront.web.app", "http://localhost:4200"})
 public class CEntradas {
 
     @Autowired

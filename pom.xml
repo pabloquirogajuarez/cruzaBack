@@ -12,7 +12,7 @@
     <artifactId>cruza</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cruzaBackv2</name>
-    <description>Portfolio de Pablo Quiroga Juarez</description>
+    <description>cruza web</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

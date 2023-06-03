@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@CrossOrigin(origins = {"https://frontendpqj.web.app","http://localhost:4200"})
+@CrossOrigin(origins = {"https://cruzafront.web.app","http://localhost:4200"})
 
 @RequestMapping("/bebidas")
 public class CBebidas {
