@@ -39,13 +39,13 @@ public class CBebidas {
 
     @Autowired
     Sbebidas shys;
-    @Operation(summary = "Trae una lista de las skills creadas")
+    @Operation(summary = "Trae una lista de las bebidas creadas")
     @GetMapping("/lista")
     public ResponseEntity<List<Bebidas>> list() {
         List<Bebidas> list = shys.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
-    @Operation(summary = "Según los id's obtenidos en skills/lista, puedes ver la informacion de la misma")
+    @Operation(summary = "Según los id's obtenidos en bebidas/lista, puedes ver la informacion de la misma")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Bebidas> getById(@PathVariable("id") int id) {
         if (!shys.existsById(id)) {
@@ -56,7 +56,7 @@ public class CBebidas {
     }
     
     
-    @Operation(summary = "Borrar una skill por id")
+    @Operation(summary = "Borrar una bebida por id")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
@@ -68,7 +68,7 @@ public class CBebidas {
     }
     
     
-    @Operation(summary = "Crear una skill")
+    @Operation(summary = "Crear una bebida")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoBebidas dtohys) {
@@ -84,7 +84,7 @@ public class CBebidas {
 
         return new ResponseEntity(new Mensaje("Skill agregada"), HttpStatus.OK);
     }
-    @Operation(summary = "Según los id's obtenidos en skill/lista, edita la informacion del id al que se apunta")
+    @Operation(summary = "Según los id's obtenidos en bebidas/lista, edita la informacion del id al que se apunta")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoBebidas dtohys) {

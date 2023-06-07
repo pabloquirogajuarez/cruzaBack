@@ -39,14 +39,14 @@ public class CEntradas {
     @Autowired
     Sentradas sEducacion;
 
-    @Operation(summary = "Trae una lista de las educaciones creadas")
+    @Operation(summary = "Trae una lista de las entradas creadas")
     @GetMapping("/lista")
     public ResponseEntity<List<Entradas>> list() {
         List<Entradas> list = sEducacion.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
-    @Operation(summary = "Según los id's obtenidos en educacion/lista, puedes ver la informacion puedes ver la informacion de la misma")
+    @Operation(summary = "Según los id's obtenidos en entradas/lista, puedes ver la informacion puedes ver la informacion de la misma")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Entradas> getById(@PathVariable("id") int id) {
         if (!sEducacion.existsById(id)) {
@@ -56,7 +56,7 @@ public class CEntradas {
         Entradas educacion = sEducacion.getOne(id).get();
         return new ResponseEntity(educacion, HttpStatus.OK);
     }
-    @Operation(summary = "Borrar una educación por id")
+    @Operation(summary = "Borrar una entrada por id")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
@@ -66,7 +66,7 @@ public class CEntradas {
         sEducacion.delete(id);
         return new ResponseEntity(new Mensaje("Educacion eliminada"), HttpStatus.OK);
     }
-    @Operation(summary = "Crear una educación")
+    @Operation(summary = "Crear una entrada")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoEntradas dtoeducacion) {
@@ -84,7 +84,7 @@ public class CEntradas {
         return new ResponseEntity(new Mensaje("Educacion creada"), HttpStatus.OK);
 
     }
-    @Operation(summary = "Según los id's obtenidos en educacion/lista, edita la informacion del id al que se apunta")
+    @Operation(summary = "Según los id's obtenidos en entradas/lista, edita la informacion del id al que se apunta")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoEntradas dtoeducacion) {

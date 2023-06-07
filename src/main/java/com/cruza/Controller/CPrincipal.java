@@ -33,14 +33,14 @@ public class CPrincipal {
     @Autowired
     SPrincipal sExperiencia;
     
-    @Operation(summary = "Trae una lista de las experiencias creadas")
+    @Operation(summary = "Trae una lista de platos principales creados")
     @GetMapping("/lista")
     public ResponseEntity<List<Principal>> list(){
         List<Principal> list = sExperiencia.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
-    @Operation(summary = "Según los id's obtenidos en experiencia/lista, puedes ver la informacion puedes ver la informacion de la misma")
+    @Operation(summary = "Según los id's obtenidos en principal/lista, puedes ver la informacion puedes ver la informacion de la misma")
     @GetMapping("/detail/{id}")
     public ResponseEntity<Principal> getById(@PathVariable("id") int id){
         if(!sExperiencia.existsById(id))
@@ -49,7 +49,7 @@ public class CPrincipal {
         return new ResponseEntity(experiencia, HttpStatus.OK);
     }
     
-    @Operation(summary = "Borrar una experiencia por id")
+    @Operation(summary = "Borrar un plato principal por id")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
@@ -60,7 +60,7 @@ public class CPrincipal {
         return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
     }
 
-    @Operation(summary = "Crear una experiencia")
+    @Operation(summary = "Crear una plato principal")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoPrincipal dtoexp){      
@@ -76,7 +76,7 @@ public class CPrincipal {
     }
     
     
-    @Operation(summary = "Según los id's obtenidos en experiencia/lista, edita la informacion del id al que se apunta")
+    @Operation(summary = "Según los id's obtenidos en principal/lista, edita la informacion del id al que se apunta")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoPrincipal dtoexp){
