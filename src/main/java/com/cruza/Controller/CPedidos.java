@@ -86,7 +86,7 @@ public class CPedidos {
                 dtopedidos.getNumeroPedido(),
                 dtopedidos.getNumeroMesaPedido(),
                 dtopedidos.getNombreClientePedido(),
-                dtopedidos.getEstadoPedido(), // se agregan los paréntesis después de "horarioPedido"
+                dtopedidos.getHorarioPedido(),
                 dtopedidos.getPedido(),
                 dtopedidos.getObservacionesPedido(),
                 dtopedidos.getEstadoPedido(),
