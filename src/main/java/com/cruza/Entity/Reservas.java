@@ -4,6 +4,7 @@
  */
 package com.cruza.Entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
  *
  * @author pablop
  */
+@Entity
 public class Reservas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
