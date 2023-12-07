@@ -61,7 +61,7 @@ public class CPedidos {
     }
 
     @Operation(summary = "Borrar un pedido por id")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MOZO')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         if (!sPedidos.existsById(id)) {
@@ -72,7 +72,7 @@ public class CPedidos {
     }
 
     @Operation(summary = "Crear un pedido")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MOZO')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoPedidos dtopedidos) {
         if (StringUtils.isBlank(dtopedidos.getNumeroPedido())) {
@@ -99,7 +99,7 @@ public class CPedidos {
     }
 
     @Operation(summary = "Según los id's obtenidos en pedidos/lista, edita la informacion del id al que se apunta")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MOZO')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoPedidos dtoPedidos) {
         if (!sPedidos.existsById(id)) {
