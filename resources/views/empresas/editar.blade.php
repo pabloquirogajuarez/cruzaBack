@@ -63,8 +63,8 @@
 
                         <div class="row mb-3 align-items-center">
                             <label for="estadoEmpresa" class="col-md-3 col-form-label">Estado de la Empresa:</label>
-                            <div class="col-md-9">
-                                <select name="estadoEmpresa" id="estadoEmpresa" class="form-control" required>
+                            <div class="col-md-9" readonly>
+                                <select name="estadoEmpresa" id="estadoEmpresa" class="form-control" readonly>
                                     <option value="Activa" {{ $empresa->estadoEmpresa == 'Activa' ? 'selected' : '' }}>Activa</option>
                                     <option value="Inactiva" {{ $empresa->estadoEmpresa == 'Inactiva' ? 'selected' : '' }}>Inactiva</option>
                                 </select>

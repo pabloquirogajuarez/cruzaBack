@@ -47,7 +47,14 @@ class SeederTablaPermisos extends Seeder
             'ver-socio',
             'crear-socio',
             'editar-socio',
-            'borrar-socio'            
+            'borrar-socio',      
+            
+
+            //Operaciones sobre recibos
+            'ver-recibo',
+            'crear-recibo',
+            'editar-recibo',
+            'borrar-recibo' 
         ];
 
         foreach($permisos as $permiso) {

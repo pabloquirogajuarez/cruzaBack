@@ -11,7 +11,7 @@
     <a class="nav-link bg-dark" href="/vendedores">
         <i class=" fas fa-users" style="color: white"></i><span style="color: white">Administrar vendedores</span>
     </a>
-    <a class="nav-link bg-dark" href="/recibos">
+    <a class="nav-link bg-dark" href="/todo-historial">
         <i class=" fas fa-history" style="color: white"></i><span style="color: white">Historial de recibos</span>
     </a>
 </li>

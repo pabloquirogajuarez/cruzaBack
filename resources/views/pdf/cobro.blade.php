@@ -84,7 +84,7 @@ tr:nth-child(even) {
         <div class="header">
             <img src="./img/vdvlogocoop.jpg" alt="VDV COOP Logo" class="logo">
             <h1>Listado de Cobro Empresas</h1>
-            <div class="subtitle">{{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</div>
+            <div class="subtitle">{{ ucfirst(\Carbon\Carbon::now()->locale('es')->translatedFormat('F Y')) }}</div>
         </div>
         
         <div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Models\Vendedor;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VendedorController extends Controller
 {
@@ -17,15 +19,97 @@ class VendedorController extends Controller
     }
 
 
-
-
     public function index(Request $request)
     {
-        $vendedores = Vendedor::paginate(10);
+        // Obtener los vendedores junto con sus empresas activas y socios activos asociados
+        $vendedores = Vendedor::with(['empresas' => function($query) {
+            $query->where('estadoEmpresa', 'Activa') // Filtrar solo empresas activas
+                  ->with(['socios' => function($query) {
+                      $query->where('estado', 'Activo'); // Filtrar solo socios activos
+                  }]);
+        }])->paginate(10);
+    
+        // Definir los montos por socio con y sin aporte
+        $montoConAporte = 100;  // Ajusta estos valores según tu lógica de negocio
+        $montoSinAporte = 50;
+    
+        // Crear un arreglo para almacenar las empresas y su conteo de aportes por vendedor
+        $vendedoresComisionData = [];
+    
+        foreach ($vendedores as $vendedor) {
+            $comisionData = []; // Arreglo para almacenar los datos de cada empresa del vendedor
+            foreach ($vendedor->empresas as $empresa) {
+                $sociosConAportes = $empresa->socios->where('aportes', 'SI')->count();
+                $sociosSinAportes = $empresa->socios->where('aportes', 'NO')->count();
+                $totalSocios = $sociosConAportes + $sociosSinAportes;
+    
+                // Solo guardar los datos si hay socios activos
+                if ($totalSocios > 0) {
+                    $comisionData[] = [
+                        'nombreEmpresa' => $empresa->nombreEmpresa,
+                        'sociosConAportes' => $sociosConAportes,
+                        'sociosSinAportes' => $sociosSinAportes,
+                        'totalSocios' => $totalSocios,
+                    ];
+                }
+            }
+    
+            // Guardar los datos de comisión del vendedor
+            $vendedoresComisionData[$vendedor->id] = $comisionData;
+        }
+    
+        // Puedes calcular los totales de activos e inactivos si tienes esa lógica en tu proyecto
         $totalActivos = Vendedor::where('estado', 'Activo')->count();
         $totalInactivos = Vendedor::where('estado', 'Inactivo')->count();
-        return view('vendedores.index', compact('vendedores', 'totalActivos', 'totalInactivos'));
+    
+        // Retornar la vista con todas las variables necesarias
+        return view('vendedores.index', compact('vendedores', 'montoConAporte', 'montoSinAporte', 'totalActivos', 'totalInactivos', 'vendedoresComisionData'));
     }
+    
+
+
+    public function generarComision(Request $request, $vendedorId)
+{
+    // Obtener el vendedor con sus empresas activas y socios activos
+    $vendedor = Vendedor::with(['empresas' => function($query) {
+        $query->where('estadoEmpresa', 'Activa') // Filtrar solo empresas activas
+              ->with(['socios' => function($query) {
+                  $query->where('estado', 'Activo'); // Filtrar solo socios activos
+              }]);
+    }])->findOrFail($vendedorId);
+
+    // Obtener los montos de la solicitud
+    $montoConAporte = $request->query('montoConAporte', 100); // Valor por defecto 100
+    $montoSinAporte = $request->query('montoSinAporte', 50); // Valor por defecto 50
+
+    // Crear un arreglo para almacenar las empresas y su conteo de aportes por vendedor
+    $vendedoresComisionData = [];
+
+    foreach ($vendedor->empresas as $empresa) {
+        // Filtrar los socios activos de la empresa
+        $sociosConAportes = $empresa->socios->where('aportes', 'SI')->count();
+        $sociosSinAportes = $empresa->socios->where('aportes', 'NO')->count();
+        $totalSocios = $sociosConAportes + $sociosSinAportes;
+
+        // Guardar los datos en el arreglo solo si la empresa tiene socios activos
+        if ($totalSocios > 0) {
+            $vendedoresComisionData[] = [
+                'nombreEmpresa' => $empresa->nombreEmpresa,
+                'sociosConAportes' => $sociosConAportes,
+                'sociosSinAportes' => $sociosSinAportes,
+                'totalSocios' => $totalSocios,
+            ];
+        }
+    }
+
+    // Cargar la vista y pasar los datos
+    $pdf = PDF::loadView('pdf.comision', compact('vendedor', 'montoConAporte', 'montoSinAporte', 'vendedoresComisionData'));
+
+    // Descargar el PDF
+    return $pdf->stream('comision.pdf');
+}
+
+
 
     public function buscar(Request $request)
     {
@@ -66,7 +150,20 @@ class VendedorController extends Controller
     }
 
 
-    
+    public function toggleEstado($id)
+{
+    $vendedor = Vendedor::findOrFail($id);
+
+    if ($vendedor->estado == 'Activo') {
+        $vendedor->estado = 'Inactivo';
+    } else {
+        $vendedor->estado = 'Activo';
+    }
+
+    $vendedor->save();
+
+    return redirect()->route('vendedores.index')->with('success', 'El estado del vendedor ha sido actualizado.');
+}
 
 
     public function show($id)
@@ -101,10 +198,11 @@ class VendedorController extends Controller
 
         public function edit($id)
         {
-            $empresa = Empresa::findOrFail($id);
-            $vendedores = Vendedor::all(); // Asegúrate de obtener todos los vendedores
-    
-            return view('empresas.editar', compact('empresa', 'vendedores'));
+            // Obtener el vendedor por su ID
+            $vendedor = Vendedor::findOrFail($id);
+        
+            // Retornar la vista para editar el vendedor, pasando el vendedor como variable
+            return view('vendedores.edit', compact('vendedor'));
         }
 
     public function update(Request $request, $id)
@@ -120,4 +218,7 @@ class VendedorController extends Controller
         $vendedor->delete();
         return redirect()->route('vendedores.index');
     }
+
+
+
 }

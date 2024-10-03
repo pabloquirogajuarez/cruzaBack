@@ -67,7 +67,7 @@
                     <p class="card-text">
                         <span class="badge badge-success">Total de socios activos: {{ $socios_activos }} </span>
                     </p>
-                    <a href="{{ route('pdf.cobro') }}" class="btn btn-info btn-block">
+                    <a href="{{ route('pdf.cobro') }}" class="btn btn-info btn-block" target="_blank">
                         Generar listado de cobro
                     </a>
                     @endcan
@@ -132,15 +132,53 @@
                                             <a href="{{ route('empresas.show', $empresa->id) }}" class="btn btn-info btn-sm">
                                                 <i class="fas fa-eye"></i> Ver detalles
                                             </a>
-                                            @can('borrar-empresa')
-                                            <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta empresa?')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                            @endcan
+                                            @if($empresa->estadoEmpresa === 'Activa')
+        <form action="{{ route('empresas.baja', $empresa->id) }}" method="POST" style="display:inline-block;">
+            @csrf
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de dar de baja a esta empresa? Pondrá inactiva la empresa y a sus socios.')">
+                Dar de baja
+            </button>
+        </form>
+    @endif
+    @if($empresa->estadoEmpresa === 'Inactiva')
+    <form action="{{ route('empresas.alta', $empresa->id) }}" method="POST" style="display:inline-block;">
+        @csrf
+        <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('¿Estás seguro de dar de alta a esta empresa?')">
+            Dar de alta
+        </button>
+    </form>
+@endif
+@can('borrar-empresa')
+<!-- Botón para abrir el modal -->
+<button type="button" class="btn btn-danger btn-sm" data-backdrop="false" data-toggle="modal" data-target="#confirmDeleteModal{{ $empresa->id }}">
+    <i class="fas fa-trash-alt"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal{{ $empresa->id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ $empresa->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel{{ $empresa->id }}">Confirmar eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de eliminar esta empresa para siempre? Esto es irreversible y borrará también a los socios de esta.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endcan
                                         </td>
                                     </tr>
                                     @endforeach

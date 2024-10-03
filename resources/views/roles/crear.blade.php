@@ -192,6 +192,24 @@
                                             </div>
                                         </div>
 
+                                        {{-- Operaciones sobre historial --}}
+                                        <div class="col-md-4 mb-4">
+                                            <div class="permissions-section bg-light p-3 rounded">
+                                                <h5 class="font-weight-bold">Operaciones sobre Historial</h5>
+                                                @foreach(['ver-socio', 'crear-socio', 'editar-socio', 'borrar-socio'] as $permiso)
+                                                    <div class="permission-item d-flex justify-content-between align-items-center mt-2">
+                                                        <span>{{ ucfirst(str_replace('-', ' ', $permiso)) }}</span>
+                                                        <label class="switch">
+                                                            {{ Form::checkbox('permission[]', $permission->firstWhere('name', $permiso)->id, false, ['class' => 'switch-input']) }}
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
                                 </div>
                             </div>

@@ -83,7 +83,7 @@
         <div class="header">
             <img src="./img/vdvlogocoop.jpg" alt="VDV COOP Logo" class="logo">
             <h1>Informe de Empresa</h1>
-            <div class="subtitle">{{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</div>
+            <div class="subtitle">{{ ucfirst(\Carbon\Carbon::now()->locale('es')->translatedFormat('F Y')) }}</div>
         </div>
 
         <div class="info">
@@ -98,7 +98,6 @@
                     <th>Nombre</th>
                     <th>DNI</th>
                     <th>Fecha de Alta</th>
-                    <th>Fecha de Baja</th>
                     <th>Aportes</th>
                     <th>Estado</th>
                     <th>Costo</th> <!-- Costo será igual a montoSocio -->
@@ -110,7 +109,6 @@
                     <td>{{ $socio->nombre }}</td>
                     <td>{{ $socio->dni }}</td>
                     <td>{{ $socio->fecha_alta }}</td>
-                    <td>{{ $socio->fecha_baja ?? 'N/A' }}</td>
                     <td>{{ $socio->aportes }}</td>
                     <td>{{ $socio->estado }}</td>
                     <td>${{ number_format($socio->montoSocio, 2) }}</td>
@@ -125,9 +123,6 @@
             <p><strong>Total + IVA (21%):</strong> ${{ number_format($totalConIVA, 2) }}</p>
         </div>
 
-        <div class="footer">
-            Documento generado el  {{ \Carbon\Carbon::now()->setTimezone('America/Argentina/Buenos_Aires')->format('d/m/Y - H:i') }}hs - VDV COOP
-        </div>
     </div>
 </body>
 </html>

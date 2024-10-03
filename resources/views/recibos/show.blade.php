@@ -1,29 +1,156 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white" >
-            <h4 class="mb-0" style="color:white"><i class="fas fa-file-invoice-dollar"></i> Detalles del Recibo</h4>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo VDVCOOP</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        @page {
+            size: A4 landscape; /* Cambia la orientación a horizontal */
+            margin: 1mm;
+        }
+        body {
+            width: 297mm; /* Ajustado para A4 horizontal */
+            height: 210mm; 
+            background-color: white;
+            display: flex;
+        }
+        .contpri {
+            display: flex; /* Usamos flex para alinear los recibos */
+            width: 100%; /* Ocupa todo el ancho del contenedor */
+        }
+        .recibo-container1, .recibo-container2 {
+            width: 48%; /* Mantener el mismo ancho */
+            border: 1px solid #aaa;
+            padding: 3mm; /* Mantener el padding bajo */
+            font-size: 14pt; /* Aumentar el tamaño de la fuente */
+            margin: 0; /* Elimina el margen para que estén pegados */
+        }
+        .card-header {
+            text-align: center;
+            margin-bottom: 3mm; /* Mantener una separación moderada */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .info-box, .highlight {
+            border: 1px solid #aaa;
+            padding: 2mm; /* Padding reducido para mantener la cercanía */
+            margin-bottom: 2mm; /* Mantener una separación moderada entre secciones */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2mm; /* Separación inferior de la tabla */
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 1mm; /* Mantener un padding moderado */
+            text-align: left;
+        }
+        .total-section {
+            text-align: right;
+            border-top: 1px solid #aaa;
+            padding-top: 3mm; /* Mantener un espacio moderado */
+        }
+        .float-right {
+            float: right; /* Alinea el segundo recibo a la derecha */
+        }
+        .float-left {
+            float: left; /* Alinea el segundo recibo a la izquierda */
+        }
+    </style>
+</head>
+<body>
+    <div class="contpri">
+        <!-- Primer Recibo -->
+        <div class="recibo-container1 float-left">
+            <div class="card-header">
+                <img src="./img/vdvReciboHeaderv3.jpg" alt="Descripción de la imagen">
+                <p>N° de Recibo: {{ $recibo->codigo_recibo }}</p>
+            </div>
+            <div class="info-box">
+                <p><strong>Datos del Cliente:</strong></p>
+                <p>Cliente: {{ $recibo->empresa->nombreEmpresa }}</p>
+                <p>CUIT: {{ $recibo->empresa->cuitEmpresa }}</p>
+                <p>Domicilio: {{ $recibo->empresa->direccionEmpresa }}</p>
+            </div>
+            <div class="highlight">
+                <p><strong>Monto Recibido</strong></p>
+                <p>x</p>
+            </div>
+            <div class="highlight">
+                <p><strong>Concepto</strong></p>
+                <p>{{ $recibo->concepto }}</p>
+            </div>
+            <div>
+                <p><strong>Detalles del Pago</strong></p>
+                <table>
+                    <tr>
+                        <th>Efectivo</th>
+                        <th>CHEQUE N°</th>
+                        <th>BANCO</th>
+                        <th>IMPORTE</th>
+                    </tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                </table>
+            </div>
+            <div class="total-section">
+                <p><strong>TOTAL</strong></p>
+                <p>${{ number_format($recibo->monto, 2, ',', '.') }}</p>
+            </div>
         </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-4"><i class="fas fa-barcode"></i> Código de Recibo:</dt>
-                <dd class="col-sm-8">{{ $recibo->codigo_recibo }}</dd>
-
-                <dt class="col-sm-4"><i class="fas fa-building"></i> Empresa:</dt>
-                <dd class="col-sm-8">{{ $recibo->empresa->nombreEmpresa }}</dd>
-
-                <dt class="col-sm-4"><i class="fas fa-dollar-sign"></i> Monto:</dt>
-                <dd class="col-sm-8">{{ $recibo->monto }}</dd>
-
-                <dt class="col-sm-4"><i class="fas fa-info-circle"></i> En Concepto de:</dt>
-                <dd class="col-sm-8">{{ $recibo->concepto }}</dd>
-
-                <dt class="col-sm-4"><i class="fas fa-calendar-alt"></i> Fecha:</dt>
-                <dd class="col-sm-8">{{ $recibo->created_at->format('d/m/Y') }}</dd>
-            </dl>
+        
+        <!-- Segundo Recibo (Duplicado) -->
+        <div class="recibo-container2 float-right">
+            <div class="card-header">
+                <img src="./img/vdvReciboHeaderv3.jpg" alt="Descripción de la imagen">
+                <p>N° de Recibo: {{ $recibo->codigo_recibo }} (Duplicado)</p>
+            </div>
+            <div class="info-box">
+                <p><strong>Datos del Cliente:</strong></p>
+                <p>Cliente: {{ $recibo->empresa->nombreEmpresa }}</p>
+                <p>CUIT: {{ $recibo->empresa->cuitEmpresa }}</p>
+                <p>Domicilio: {{ $recibo->empresa->direccionEmpresa }}</p>
+            </div>
+            <div class="highlight">
+                <p><strong>Monto Recibido</strong></p>
+                <p>x}</p>
+            </div>
+            <div class="highlight">
+                <p><strong>Concepto</strong></p>
+                <p>{{ $recibo->concepto }}</p>
+            </div>
+            <div>
+                <p><strong>Detalles del Pago</strong></p>
+                <table>
+                    <tr>
+                        <th>Efectivo</th>
+                        <th>CHEQUE N°</th>
+                        <th>BANCO</th>
+                        <th>IMPORTE</th>
+                    </tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                </table>
+            </div>
+            <div class="total-section">
+                <p><strong>TOTAL</strong></p>
+                <p>${{ number_format($recibo->monto, 2, ',', '.') }}</p>
+            </div>
         </div>
     </div>
-</div>
-@endsection
+</body>
+</html>

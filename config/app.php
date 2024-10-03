@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Argentina/Buenos_Aires',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
+        
 
         /*
          * Package Service Providers...
@@ -180,8 +182,8 @@ return [
 
         //pdfprovider
         Barryvdh\DomPDF\ServiceProvider::class,
+        //excelprovider
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
     ],
 
     /*
@@ -237,7 +239,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
     ],
 
 ];

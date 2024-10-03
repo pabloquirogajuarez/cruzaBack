@@ -6,6 +6,7 @@ use App\Models\Vendedor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 use App\Models\Recibo;
+use App\Models\Informe;
 
 class EmpresaController extends Controller
 {
@@ -61,24 +62,120 @@ class EmpresaController extends Controller
 
 
     public function generarInforme(Request $request, $id)
-{
-    $empresa = Empresa::with('socios')->findOrFail($id);
+    {
+        $empresa = Empresa::with('socios')->findOrFail($id);
     
-    // Filtrar socios activos
-    $sociosActivos = $empresa->socios->where('estado', 'Activo');
+        // Filtrar socios activos
+        $sociosActivos = $empresa->socios->where('estado', 'Activo');
     
-    // Calcular el total sumando los montos de los socios activos
-    $total = $sociosActivos->sum('montoSocio');
+        // Calcular el total sumando los montos de los socios activos
+        $total = $sociosActivos->sum(function ($socio) {
+            return is_numeric($socio->montoSocio) ? (float)$socio->montoSocio : 0;
+        });
     
-    // Calcular el total con IVA (21%)
-    $totalConIVA = $total * 1.21;
+        // Calcular el total con IVA (21%)
+        $totalConIVA = $total * 1.21;
     
-    // Generar el PDF usando DomPDF
-    $pdf = Pdf::loadView('pdf.informe', compact('empresa', 'sociosActivos', 'total', 'totalConIVA'));
+        // Guardar el historial del informe
+        Informe::create([
+            'empresa_id' => $empresa->id,
+            'socios_activos' => json_encode($sociosActivos->map(function ($socio) {
+                return [
+                    'id' => $socio->id,
+                    'nombre' => $socio->nombre,
+                    'dni' => $socio->dni,
+                    'fecha_alta' => $socio->fecha_alta,
+                    'aportes' => $socio->aportes,
+                    'estado' => $socio->estado,
+                    'monto' => $socio->montoSocio,
+
+                    // 'otro_campo' => $socio->otro_campo, // Puedes agregar más campos según sea necesario
+                ];
+            })),
+            'total' => $total,
+            'total_con_iva' => $totalConIVA,
+        ]);
+    
+        // Generar el PDF usando DomPDF
+        $pdf = Pdf::loadView('pdf.informe', compact('empresa', 'sociosActivos', 'total', 'totalConIVA'));
+    
+        return $pdf->stream('informe_empresa_' . $empresa->id . '.pdf');
+    }
+    
+    
 
     
-    return $pdf->stream('informe_empresa_' . $empresa->id . '.pdf');
+    
+    
+
+
+    public function verHistorialInformes(Request $request)
+{
+    // Obtener el término de búsqueda
+    $searchTerm = $request->input('search');
+    
+    // Filtrar informes según el término de búsqueda
+    $informes = Informe::with('empresa')
+        ->whereHas('empresa', function ($query) use ($searchTerm) {
+            $query->where('nombreEmpresa', 'like', '%' . $searchTerm . '%');
+        })
+        ->orWhere('total', 'like', '%' . $searchTerm . '%')
+        ->orWhere('total_con_iva', 'like', '%' . $searchTerm . '%')
+        ->orWhereDate('created_at', 'like', '%' . $searchTerm . '%')
+        ->paginate(5);
+    
+    return view('historial_informe.index', compact('informes'));
 }
+
+    
+    
+
+
+
+
+
+public function verInforme($id)
+{
+    // Obtener el informe por ID
+    $informe = Informe::findOrFail($id);
+
+    // Decodificar el JSON almacenado en el campo `socios_activos`
+    $sociosActivosArray = json_decode($informe->socios_activos, true);
+
+    // Verificar si la decodificación fue exitosa
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        abort(500, 'Error al decodificar los datos de socios activos: ' . json_last_error_msg());
+    }
+
+    // Reconvertir el array en objetos con las propiedades necesarias
+    $sociosActivos = collect($sociosActivosArray)->map(function($socio) {
+        return (object) [
+            'nombre' => $socio['nombre'] ?? 'N/A',
+            'dni' => $socio['dni'] ?? 'N/A',
+            'fecha_alta' => $socio['fecha_alta'] ?? 'N/A',
+            'aportes' => $socio['aportes'] ?? 'N/A',
+            'estado' => $socio['estado'] ?? 'N/A',
+            'montoSocio' => $socio['monto'] ?? 0, // Asegúrate de que el campo sea 'monto' según lo guardado
+        ];
+    });
+
+    // Generar el PDF usando los datos reconstruidos
+    $pdf = Pdf::loadView('pdf.informe', [
+        'empresa' => $informe->empresa,
+        'sociosActivos' => $sociosActivos,
+        'total' => $informe->total,
+        'totalConIVA' => $informe->total_con_iva,
+    ]);
+
+    return $pdf->stream('informe_empresa_' . $informe->empresa->id . '.pdf');
+}
+
+
+
+
+    
+    
+
 
    
    public function generarcobro(Request $request)
@@ -228,7 +325,50 @@ $codigoRecibo = substr($codigoRecibo, 0, 15); // Limitar la longitud del código
 
     
     
+    public function baja(Request $request, $id)
+    {
+        // Encontrar la empresa por ID
+        $empresa = Empresa::findOrFail($id);
         
+        // Verificar que la empresa esté activa antes de dar de baja
+        if ($empresa->estadoEmpresa === 'Activa') {
+            // Cambiar el estado de la empresa a 'Inactiva'
+            $empresa->estadoEmpresa = 'Inactiva';
+            $empresa->save();
+    
+            // Dar de baja a todos los socios asociados
+            foreach ($empresa->socios as $socio) {
+                $socio->estado = 'Inactivo'; // Cambiar el estado del socio a 'Inactivo'
+                $socio->fecha_baja = now(); // Modificar la fecha de baja del socio
+                $socio->save();
+            }
+    
+            return redirect()->route('empresas.index')->with('success', 'La empresa y sus socios han sido dados de baja.');
+        }
+    
+        return redirect()->route('empresas.index')->with('error', 'La empresa ya está inactiva.');
+    }
+       
+    public function alta($id)
+{
+    $empresa = Empresa::findOrFail($id);
+    
+    if ($empresa->estadoEmpresa === 'Inactiva') {
+        $empresa->estadoEmpresa = 'Activa';
+        $empresa->save();
+
+        // Dar de alta a todos los socios asociados - Solo deberia dar de alta a la empresa
+        //foreach ($empresa->socios as $socio) {
+            //$socio->estado = 'Activo'; // Cambiar el estado del socio a 'Activo' 
+            //$socio->fecha_baja = null; // Limpiar la fecha de baja del socio
+            //$socio->save();
+        //}
+
+        return redirect()->route('empresas.index')->with('success', 'La empresa y sus socios han sido dados de alta.');
+    }
+
+    return redirect()->route('empresas.index')->with('error', 'La empresa ya está activa.');
+}
 
 
     /**

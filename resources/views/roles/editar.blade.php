@@ -191,6 +191,22 @@
                                                 </div>
                                             </div>
 
+                                            {{-- Operaciones sobre Recibos --}}
+<div class="col-md-4 mb-4">
+    <div class="permissions-section bg-light p-3 rounded">
+        <h5 class="font-weight-bold">Operaciones sobre Recibos</h5>
+        @foreach(['ver-recibo', 'crear-recibo', 'editar-recibo', 'borrar-recibo'] as $permiso)
+    <div class="permission-item d-flex justify-content-between align-items-center mt-2">
+        <span>{{ ucfirst(str_replace('-', ' ', $permiso)) }}</span>
+        <label class="switch">
+            {{ Form::checkbox('permission[]', $permission->firstWhere('name', $permiso)->id, in_array($permission->firstWhere('name', $permiso)->id, $rolePermissions), ['class' => 'switch-input']) }}
+            <span class="slider round"></span>
+        </label>
+    </div>
+@endforeach
+    </div>
+</div>
+
                                         </div>
                                     </div>
                                 </div>

@@ -36,11 +36,15 @@
                                 <div class="modal-content">
                                     <div class="modal-header bg-info text-white">
                                         <h5 class="modal-title" id="generarReciboModalLabel">Generar Recibo</h5>
-                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-
-                                        </button>
+                                        <button type="button" class="btn-close" onclick="location.reload();" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+
+                                    @php
+    use Carbon\Carbon;
+    $currentMonth = ucfirst(Carbon::now()->locale('es')->translatedFormat('F'));
+    $currentYear = Carbon::now()->year;
+    $inputValue = "Servicios cooperativos prestados por el periodo de $currentMonth $currentYear";
+@endphp
                                     <div class="modal-body">
                                         <!-- Formulario dentro del modal -->
                                         <form action="{{ route('empresas.generar-recibo', ['empresa' => $empresa->id]) }}" method="POST" target="_blank">
@@ -51,7 +55,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="concepto">En Concepto de:</label>
-                                                <input type="text" name="concepto" id="concepto" class="form-control" placeholder="Ingrese el concepto" required>
+                                                <input type="text" name="concepto" id="concepto" class="form-control" value="{{ $inputValue }}">
                                             </div>
                                             
                                             <!-- Mostrar total y total + IVA -->
@@ -60,10 +64,6 @@
                                                 <label>Total:</label>
                                                 <p id="totalRecibo" style="font-weight: bold; color:black;">$0</p>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Total + IVA (21%):</label>
-                                                <p id="totalIVARecibo" style="font-weight: bold; color:black;">$0</p>
-                                            </div>
 
                                             <button type="submit" class="btn btn-success btn-block">
                                                 <i class="fas fa-download"></i> Descargar Recibo
@@ -71,7 +71,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="location.reload();">Cerrar</button>
                                     </div>
                                 </div>
                             </div>
@@ -185,21 +185,28 @@
         Retorno de Ant.</button>
     <button type="button" class="btn btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#bonificacionModal" onclick="setSocioId({{ $socio->id }}, '{{ $socio->nombre }}')">
         Bonif.</button>
-                                                <td class="">
-                                                    <a href="{{ route('socios.show', ['socio' => $socio->id]) }}" class="btn btn-sm" style="background-color: white; color: black; border: 1px solid black;">
-                                                        <i class="fas fa-eye"></i> Ver
-                                                    </a>
-                                                    <a href="{{ route('socios.edit', ['socio' => $socio->id]) }}" class="btn btn-sm" style="background-color: white; color: black; border: 1px solid black;">
-                                                        <i class="fas fa-edit"></i> Editar
-                                                    </a>
-                                                    <form action="{{ route('socios.destroy', ['socio' => $socio->id]) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este socio?')" style="background-color: red; color: white;"> 
-                                                            <i class="fas fa-trash"></i> Eliminar
-                                                        </button>
-                                                    </form>
-                                                </td>
+        <td class="">
+    <a href="{{ route('socios.show', ['socio' => $socio->id]) }}" class="btn btn-sm" style="background-color: white; color: black; border: 1px solid black;">
+        <i class="fas fa-eye"></i> Ver
+    </a>
+    <a href="{{ route('socios.edit', ['socio' => $socio->id]) }}" class="btn btn-sm" style="background-color: white; color: black; border: 1px solid black;">
+        <i class="fas fa-edit"></i> Editar
+    </a>
+    <form action="{{ route('socios.toggleEstado', ['id' => $socio->id]) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('PUT')
+        <button type="submit" class="btn btn-warning btn-sm">
+            {{ $socio->estado == 'Activo' ? 'Dar de baja' : 'Dar de alta' }}
+        </button>
+    </form>
+    <form action="{{ route('socios.destroy', ['socio' => $socio->id]) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este socio?')" style="background-color: red; color: white;">
+            <i class="fas fa-trash"></i> Eliminar
+        </button>
+    </form>
+</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -246,7 +253,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="retribucion" class="form-label">Retribución:</label>
+                            <label for="retribucion" class="form-label">Neto a cobrar:</label>
                             <input type="number" class="form-control" id="retribucion" name="retribucion" oninput="calcularNeto()" required>
                         </div>
                         <div class="row mb-3">
@@ -268,7 +275,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="netoACobrar" class="form-label fw-bold">NETO A COBRAR:</label>
+                            <label for="netoACobrar" class="form-label fw-bold">Retribución:</label>
                             <input type="text" class="form-control" id="netoACobrar" name="netoACobrar" readonly>
                         </div>
                     </form>
@@ -347,7 +354,7 @@
             const retencion3 = parseFloat(document.getElementById('retencion3').value) || 0;
             const retencion4 = parseFloat(document.getElementById('retencion4').value) || 0;
             
-            const netoACobrar = retribucion - (retencion1 + retencion2 + retencion3 + retencion4);
+            const netoACobrar = retribucion + (retencion1 + retencion2 + retencion3 + retencion4);
             
             document.getElementById('netoACobrar').value = netoACobrar.toFixed(2);
         }
